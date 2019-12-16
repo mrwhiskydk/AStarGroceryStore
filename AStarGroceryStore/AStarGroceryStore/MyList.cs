@@ -31,22 +31,27 @@ namespace AStarGroceryStore
 
 
 
-        public T Add(T value)
+        public void Add(T value)
         {
-            if(first == null)
+            if(first == null) // if list is empty
             {
-                First = value;
-                Last = value;
-
-                Next = default(T);
+                First = value; // First value of list is set to value type
             }
-            else
+            else // if list contains at least 1 element
             {
-                T tmp = Last;
-                value = Last;
-            }
+                if(Last == null) // if list contains only 1 element
+                {
+                    Last = value; // Last element is set to value added to list
+                    Previous = First; // previous element of last element, is set to value of first element, because list contains only 2 elements
+                }
+                else // if list contains at least 2 elements
+                {
+                    T tmp = Last; // we store the value of Last element
+                    Last = value; // last element is set to value, since its the newest element added to list
+                    Previous = tmp; // Previous element is set to stored value of previously last element in list
+                }
 
-            return value;
+            }
         }
 
 
