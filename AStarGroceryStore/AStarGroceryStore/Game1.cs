@@ -11,11 +11,14 @@ namespace AStarGroceryStore
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D player;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
         }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace AStarGroceryStore
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            player = Content.Load<Texture2D>("DerpAgent");
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,9 +77,10 @@ namespace AStarGroceryStore
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin();
             // TODO: Add your drawing code here
-
+            spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
