@@ -10,8 +10,8 @@ namespace AStarGroceryStore
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,6 +39,8 @@ namespace AStarGroceryStore
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+           
 
             // TODO: use this.Content to load your game content here
         }
@@ -76,7 +78,7 @@ namespace AStarGroceryStore
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+           
             base.Draw(gameTime);
         }
     }
