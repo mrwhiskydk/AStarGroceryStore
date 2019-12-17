@@ -12,6 +12,7 @@ namespace AStarGroceryStore
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D player;
+        Texture2D floor;
 
         public Game1()
         {
@@ -43,6 +44,8 @@ namespace AStarGroceryStore
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player = Content.Load<Texture2D>("DerpAgent");
+            floor = Content.Load<Texture2D>("floor");
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -80,6 +83,13 @@ namespace AStarGroceryStore
             spriteBatch.Begin();
             // TODO: Add your drawing code here
             spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
+            for (int i = 0; i < 32; i++)
+            {
+                for (int x = 0; x < 16; x++)
+                {
+
+                }
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }
