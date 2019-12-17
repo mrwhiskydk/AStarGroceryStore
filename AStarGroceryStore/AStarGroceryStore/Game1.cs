@@ -13,7 +13,7 @@ namespace AStarGroceryStore
         SpriteBatch spriteBatch;
         Texture2D player;
         Texture2D floor;
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -83,12 +83,17 @@ namespace AStarGroceryStore
             spriteBatch.Begin();
             // TODO: Add your drawing code here
             spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
-            for (int i = 0; i < 32; i++)
+            int distance = 0;
+            int floordistance = 8;
+            for (int i = 0; i < 20; i++)
             {
-                for (int x = 0; x < 16; x++)
+                for (int x = 0; x < 11; x++)
                 {
-
+                    spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
+                    floordistance += 64;
                 }
+                floordistance = 8;
+                distance += 64;
             }
             spriteBatch.End();
             base.Draw(gameTime);

@@ -11,11 +11,15 @@ namespace AStarGroceryStore
     {
         private Vector2 position;
 
-        public Vector2 Position { get => position; }
+        private bool walkableNode = true;
 
-        public Node(Vector2 pos)
+        public Vector2 Position { get => position; }
+        public bool Walkable { get => walkableNode; }
+
+        public Node(Vector2 pos, bool walkable)
         {
             position = pos;
+            walkableNode = walkable;
         }
     }
 }
