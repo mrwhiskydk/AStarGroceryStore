@@ -7,70 +7,104 @@ using System.Threading.Tasks;
 
 namespace AStarGroceryStore
 {
-    public class MyList<T>
-    {
+    public class MyList<T> : IEnumerable<T>
+    {       
+        private MyListElement<T> first;
+        public MyListElement<T> First { get => first; set => first = value; }
 
-        private T first = default(T);
-        /// <summary>
-        /// Proberty that gets and sets the first value type, in current list
-        /// </summary>
-        private T First { get => first; set => first = value; }
-
-        private T last = default(T);
-        /// <summary>
-        /// Proberty that gets and sets the last value type, in current list
-        /// </summary>
-        private T Last { get => last; set => last = value; }
-
-        private T next;
-        public T Next { get => next; set => next = value; }
-
-        private T previous = default(T);
-        public T Previous { get => previous; set => previous = value; }
+        private MyListElement<T> last;
+        public MyListElement<T> Last { get => last; set => last = value; }
 
 
-        /// <summary>
-        /// Adds a new element, of the generic type, to the list.
-        /// </summary>
-        /// <param name="value"></param>
         public void Add(T value)
         {
-            // we're checking if the first element in list has a value, which determines wether or not the list is empty
-            if (EqualityComparer<T>.Default.Equals(First, default(T))) // EqualityComparer<T> is used for comparent the types of 2 objects
+            MyListElement<T> newElement = new MyListElement<T>(value);
+
+            if(First == null)
             {
-                First = value; // First value of list is set to value type
-                Last = value;
+                First = newElement;
+                //Last = newElement;
+
+                First.Next = default(T);
+                First.Previous = default(T);
+
+                //Last.Next = default(T);
+                //Last.Previous = default(T);
             }
-            else // if list contains at least 1 element
+            else
             {
-                if (EqualityComparer<T>.Default.Equals(Last, default(T))) // if list contains only 1 element
+                if(EqualityComparer<T>.Default.Equals(First.Next, default(T)))
                 {
-                    Last = value; // Last element is set to value added to list
-                    Previous = First; // previous element of last element, is set to value of first element, because list contains only 2 elements
+                    Last = newElement;
+                    Last.Next = default(T);
+                    Last.Previous = First.Value;
+                    First.Next = Last.Value;
                 }
-                else // if list contains at least 2 elements
+                else if(EqualityComparer<T>.Default.Equals(Last.Previous, First.Value))
                 {
-                    T tmp = Last; // we store the value of Last element
-                    Last = value; // last element is set to value, since its the newest element added to list
-                    Previous = tmp; // Previous element is set to stored value of previously last element in list
+                    MyListElement<T> tmp = Last;
+                    Last = newElement;
+                    Last.Next = default(T);
+                    Last.Previous = tmp.Value;
+                    tmp.Next = Last.Value;
+                    tmp.Previous = First.Value;
+                    First.Next = tmp.Value;
                 }
+                else
+                {
+                    MyListElement<T> tmp = Last;       
+
+                    Last = newElement;
+                    Last.Next = default(T);
+                    Last.Previous = tmp.Value;
+                    tmp.Next = Last.Value;
+                    tmp.Previous = tmp.Previous;
+                }
+
+                //MyListElement<T> tmp = Last;
+                //Last = newElement;
+                //Last.Previous = tmp.Value;
+                //tmp.Next = Last.Value;
+
+                //if(EqualityComparer<T>.Default.Equals(Last.Previous, default(T))) // if list contains only 1 element
             }
         }
 
-        //public IEnumerator<T> GetEnumerator()
-        //{
-        //    T current = First;
+        public IEnumerator<T> GetEnumerator()
+        {
+            MyListElement<T> current = First;
 
-        //    while (current != null)
-        //    {
-        //        yield return current;
-        //        current = Next;
-        //    }
-        //}
+            while(!EqualityComparer<T>.Default.Equals(current.Value, default(T)))
+            {
+             
+                if(EqualityComparer<T>.Default.Equals(current.Value, First.Value))
+                {
+                    current.Value = First.Next;
+                }
+                else if(EqualityComparer<T>.Default.Equals(current.Value, First.Next))
+                {
+                    MyListElement<T> tmp = First;
+                    tmp.Next = first.Next;
+                    tmp.Next = tmp.Next;
+                    current.Value = tmp.Next;
+                }
+                else
+                {
+                    MyListElement<T> tmp = current;
+                    tmp.Next = current.Next;
+                    tmp.Next = tmp.Next;
+                    current.Value = tmp.Next;
+                }
 
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return GetEnumerator();
-        //}
+                yield return current.Value;
+
+            }           
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
     }
 }

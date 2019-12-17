@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace AStarGroceryStore
 {
@@ -20,6 +21,17 @@ namespace AStarGroceryStore
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
+
+            MyList<int> test = new MyList<int>();
+
+            test.Add(1);
+            test.Add(2);
+            test.Add(3);
+
+            foreach (int item in test)
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
 
         /// <summary>
@@ -33,13 +45,6 @@ namespace AStarGroceryStore
             // TODO: Add your initialization logic here
 
             base.Initialize();
-
-            MyList<int> test = new MyList<int>();
-
-            test.Add(1);
-            test.Add(8);
-            test.Add(4);
-            
         }
 
         /// <summary>
