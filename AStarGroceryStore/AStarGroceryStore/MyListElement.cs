@@ -11,16 +11,25 @@ namespace AStarGroceryStore
         private T val;
         public T Value { get => val; set => val = value; }
 
-        private T previous;
-        public T Previous { get => previous; set => previous = value; }
+        //private T previous;
+        //public T Previous { get => previous; set => previous = value; }
 
-        private T next;
-        public T Next { get => next; set => next = value; }
-
+        private MyListElement<T> next;
+        public MyListElement<T> Next { get => next; set => next = value; }
 
         public MyListElement(T value)
         {
             this.Value = value;
+        }
+
+        public T GetValue()
+        {
+            if(Value == null)
+            {
+                Value = default(T);
+            }
+
+            return Value;
         }
     }
 }
