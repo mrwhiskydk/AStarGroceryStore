@@ -33,7 +33,7 @@ namespace AStarGroceryStore
 
         public void Add(T value)
         {
-            if(first == null) // if list is empty
+            if(First == null) // if list is empty
             {
                 First = value; // First value of list is set to value type
             }
