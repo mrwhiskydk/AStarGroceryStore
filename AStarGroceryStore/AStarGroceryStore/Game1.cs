@@ -33,6 +33,13 @@ namespace AStarGroceryStore
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            MyList<int> test = new MyList<int>();
+
+            test.Add(1);
+            test.Add(8);
+            test.Add(4);
+            
         }
 
         /// <summary>

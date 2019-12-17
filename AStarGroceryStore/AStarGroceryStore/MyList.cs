@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AStarGroceryStore
 {
-    public class MyList<T> : IEnumerable
+    public class MyList<T> : IEnumerable<T>
     {
         private T first;
         /// <summary>
@@ -30,12 +30,16 @@ namespace AStarGroceryStore
 
 
 
-
+        /// <summary>
+        /// Adds a new element, of the generic type, to the list.
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(T value)
         {
             if(First == null) // if list is empty
             {
                 First = value; // First value of list is set to value type
+                Last = value;
             }
             else // if list contains at least 1 element
             {
@@ -50,14 +54,23 @@ namespace AStarGroceryStore
                     Last = value; // last element is set to value, since its the newest element added to list
                     Previous = tmp; // Previous element is set to stored value of previously last element in list
                 }
-
             }
         }
 
-
-        public IEnumerator GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            T current = First;
+
+            while (current != null)
+            {
+                yield return current;
+                current = Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
