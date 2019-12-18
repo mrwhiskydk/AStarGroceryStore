@@ -13,8 +13,8 @@ namespace AStarGroceryStore
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D player;
-        
-        
+        Texture2D floor, wall, breadShelf, meatShelf, fruitShelf;
+      
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -65,6 +65,12 @@ namespace AStarGroceryStore
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player = Content.Load<Texture2D>("DerpAgent");
+            floor = Content.Load<Texture2D>("floor");
+            wall = Content.Load<Texture2D>("emtyShelf");
+            fruitShelf = Content.Load<Texture2D>("fruitShelf");
+            meatShelf = Content.Load<Texture2D>("meatShelf");
+            breadShelf = Content.Load<Texture2D>("breadShelf");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -101,7 +107,24 @@ namespace AStarGroceryStore
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             // TODO: Add your drawing code here
+            int distance = 0;
+            int floordistance = 0;
+            for (int i = 0; i < 20; i++)
+            {
+                for (int x = 0; x < 11; x++)
+                {
+                    spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
+                    
+                    floordistance += 64;
+                }
+                floordistance = 0;
+                distance += 64;
+            }
+
             spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
+            spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
+            spriteBatch.Draw(breadShelf, new Vector2(640, 0), Color.White);
+            //spriteBatch.Draw(wall, new Vector2(), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }
