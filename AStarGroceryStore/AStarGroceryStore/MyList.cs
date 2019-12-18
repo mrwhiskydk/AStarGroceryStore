@@ -10,6 +10,7 @@ namespace AStarGroceryStore
     public class MyList<T> : IEnumerable<T>
     {
         MyListElement<T> first;
+        MyListElement<T> last;
 
         private int count = 0;
         public int Count
@@ -33,10 +34,18 @@ namespace AStarGroceryStore
 
             if(first != null)
             {
-                element.Next = first; 
+                MyListElement<T> tmp = last;
+                last = element;
+                last.Previous = tmp;
+                tmp.Next = last;
+            }
+            else if(first == null)
+            {
+                first = element;
+                last = element;
             }
 
-            first = element;
+           
             count++;
         }
 
