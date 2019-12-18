@@ -14,9 +14,9 @@ namespace AStarGroceryStore
         protected string[] shopArray;
 
 
-        protected Department(/*MyList<ShopItem> shopItems, string[] shopArray*/)
+        protected Department()
         {
-            //this.ShopItems = shopItems;
+           
         }
 
        

@@ -22,25 +22,11 @@ namespace AStarGroceryStore
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
 
-            Baker baker = new Baker();
+            ShoppingList shoppingList = new ShoppingList();
 
-            foreach(ShopItem item in baker.ShopItems)
+            foreach(Department item in shoppingList.Departments)
             {
-                Console.WriteLine(item.ItemType);
-            }
-
-            Fruit fruit = new Fruit();
-
-            foreach(ShopItem item in fruit.ShopItems)
-            {
-                Console.WriteLine(item.ItemType);
-            }
-
-            Butcher butcher = new Butcher();
-
-            foreach(ShopItem item in butcher.ShopItems)
-            {
-                Console.WriteLine(item.ItemType);
+                Console.WriteLine(item.ToString());
             }
         }
 
