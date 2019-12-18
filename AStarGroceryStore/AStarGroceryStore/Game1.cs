@@ -21,6 +21,27 @@ namespace AStarGroceryStore
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
+
+            Baker baker = new Baker();
+
+            foreach(ShopItem item in baker.ShopItems)
+            {
+                Console.WriteLine(item.ItemType);
+            }
+
+            Fruit fruit = new Fruit();
+
+            foreach(ShopItem item in fruit.ShopItems)
+            {
+                Console.WriteLine(item.ItemType);
+            }
+
+            Butcher butcher = new Butcher();
+
+            foreach(ShopItem item in butcher.ShopItems)
+            {
+                Console.WriteLine(item.ItemType);
+            }
         }
 
         /// <summary>
