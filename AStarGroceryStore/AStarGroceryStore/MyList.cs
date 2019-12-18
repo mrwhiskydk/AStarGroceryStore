@@ -21,12 +21,6 @@ namespace AStarGroceryStore
             }
         }
 
-        //private MyListElement<T> first;
-        //public MyListElement<T> First { get => first; set => first = value; }
-
-        //private MyListElement<T> last;
-        //public MyListElement<T> Last { get => last; set => last = value; }
-
 
         public void Add(T value)
         {
@@ -44,9 +38,13 @@ namespace AStarGroceryStore
                 first = element;
                 last = element;
             }
-
            
             count++;
+        }
+
+        public void Remove(T value)
+        {
+
         }
 
         public IEnumerator GetEnumerator()
