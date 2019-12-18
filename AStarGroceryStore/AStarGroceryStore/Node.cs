@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,19 +6,24 @@ using System.Threading.Tasks;
 
 namespace AStarGroceryStore
 {
-    public class Node
+    class Node<T>
     {
-        private Vector2 position;
+        T value;
 
-        private bool walkableNode = true;
+        public Node<T> Previous { get; set; }
 
-        public Vector2 Position { get => position; }
-        public bool Walkable { get => walkableNode; }
-
-        public Node(Vector2 pos, bool walkable)
+        public Node(T value)
         {
-            position = pos;
-            walkableNode = walkable;
+            this.value = value;
+        }
+
+        public T GetValue()
+        {
+            if (value == null)
+            {
+                value = default(T);
+            }
+            return value;
         }
     }
 }

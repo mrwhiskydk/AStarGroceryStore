@@ -14,6 +14,7 @@
 #---------------------------------- Content ---------------------------------#
 
 #begin boss.png
+#begin BazookaRocket.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -60,4 +61,5 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:floor.png
+/build:BazookaRocket.png
 
