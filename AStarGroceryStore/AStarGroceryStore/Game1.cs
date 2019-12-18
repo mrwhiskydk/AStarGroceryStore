@@ -12,7 +12,7 @@ namespace AStarGroceryStore
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D player;
-        Texture2D floor, wall, breadShelf, meatShelf, fruitShelf;
+        Texture2D floor, wall, breadShelf, meatShelf, fruitShelf, register;
       
         public Game1()
         {
@@ -49,6 +49,7 @@ namespace AStarGroceryStore
             fruitShelf = Content.Load<Texture2D>("fruitShelf");
             meatShelf = Content.Load<Texture2D>("meatShelf");
             breadShelf = Content.Load<Texture2D>("breadShelf");
+            register = Content.Load<Texture2D>("register");
 
             // TODO: use this.Content to load your game content here
         }
@@ -103,6 +104,8 @@ namespace AStarGroceryStore
             spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
             spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
             spriteBatch.Draw(breadShelf, new Vector2(640, 0), Color.White);
+            spriteBatch.Draw(meatShelf, new Vector2(1216, 0), Color.White);
+            spriteBatch.Draw(register, new Vector2(0, 640), Color.White) ;
             //spriteBatch.Draw(wall, new Vector2(), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
