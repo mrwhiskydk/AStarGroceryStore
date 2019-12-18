@@ -13,6 +13,7 @@ namespace AStarGroceryStore
         SpriteBatch spriteBatch;
         Texture2D player;
         Texture2D floor;
+
         
         public Game1()
         {

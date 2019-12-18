@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AStarGroceryStore
 {
-    class Node<T>
+    public class Node<T>
     {
+        
+        
         T value;
 
         public Node<T> Previous { get; set; }
