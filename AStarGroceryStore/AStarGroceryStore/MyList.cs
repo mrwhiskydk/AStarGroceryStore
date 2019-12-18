@@ -62,23 +62,24 @@ namespace AStarGroceryStore
                 last = tmp;
                 last.Next = null;
             }
-            else
+            else // if the value we wish to remove is an element that is somewhere, in-between first and last element
             {
-                MyListElement<T> current = first.Next;
+                MyListElement<T> current = first.Next; // local variable used for looping through all elements
 
-                while(!EqualityComparer<T>.Default.Equals(value, current.GetValue()))
+                while(!EqualityComparer<T>.Default.Equals(value, current.GetValue())) // we loop through elements while current element isn't the one we wish to remove
                 {
-                    current = current.Next;
+                    current = current.Next; // current element is set to element next in line
                 }
 
-                MyListElement<T>[] right_left = new MyListElement<T>[2];
-                right_left[0] = current.Next;
-                right_left[1] = current.Previous;
+                MyListElement<T>[] right_left = new MyListElement<T>[2]; // local array used for storing next and previous element, of current element that we wish to remove
+                right_left[0] = current.Next; // first index is the element next in list
+                right_left[1] = current.Previous; // second index is the previous element in list
 
+                // the 2 elements sets their next & previous to one another, since their old previous and old is the one that is being removed
                 right_left[0].Previous = right_left[1];
                 right_left[1].Next = right_left[0];
 
-                current = right_left[1].Previous;
+                current = right_left[1].Previous; // the 'removed' element is set as one of the new sorted elements, from local array - so that it is 'replaced'
             }
 
             count--;
