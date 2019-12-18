@@ -26,10 +26,7 @@ namespace AStarGroceryStore
 
         private void ShuffleShoppintItems(MyList<Department> departments)
         {
-            foreach(Department dep in departments)
-            {
-
-            }
+            
         }
 
         /// <summary>
