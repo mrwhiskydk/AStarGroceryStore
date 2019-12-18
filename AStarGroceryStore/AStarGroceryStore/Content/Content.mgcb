@@ -61,7 +61,7 @@
 /processorParam:TextureFormat=Color
 /build:DerpAgent.png
 
-#begin emtyShelf.png
+#begin emtyShelfH.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -71,7 +71,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:emtyShelf.png
+/build:emtyShelfH.png
+
+#begin emtyShelfV.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:emtyShelfV.png
 
 #begin floor.png
 /importer:TextureImporter
