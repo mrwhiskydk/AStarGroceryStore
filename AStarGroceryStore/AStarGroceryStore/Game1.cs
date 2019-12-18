@@ -27,6 +27,15 @@ namespace AStarGroceryStore
             test.Add(1);
             test.Add(2);
             test.Add(3);
+            test.Add(4);
+            test.Add(5);
+
+            foreach (int item in test)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            test.Remove(4);
 
             foreach (int item in test)
             {

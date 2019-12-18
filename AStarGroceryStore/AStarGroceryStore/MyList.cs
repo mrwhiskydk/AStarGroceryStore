@@ -44,7 +44,44 @@ namespace AStarGroceryStore
 
         public void Remove(T value)
         {
+            // If the value, that we're trying to remove, doesn't exist
+            if(EqualityComparer<T>.Default.Equals(value, default(T)))
+            {
+                throw new InvalidOperationException();
+            }
 
+            if(EqualityComparer<T>.Default.Equals(value, first.Value)) // if the value we wish to remove is the first element in list
+            {
+                MyListElement<T> tmp = first.Next;
+                first = tmp;
+                first.Previous = null;
+            }
+            else if(EqualityComparer<T>.Default.Equals(value, last.Value)) // if the value we wish to remove is the last element in list
+            {
+                MyListElement<T> tmp = last.Previous;
+                last = tmp;
+                last.Next = null;
+            }
+            else
+            {
+                MyListElement<T> current = first.Next;
+
+                while(!EqualityComparer<T>.Default.Equals(value, current.GetValue()))
+                {
+                    current = current.Next;
+                }
+
+                MyListElement<T>[] right_left = new MyListElement<T>[2];
+                right_left[0] = current.Next;
+                right_left[1] = current.Previous;
+
+                right_left[0].Previous = right_left[1];
+                right_left[1].Next = right_left[0];
+
+                current = right_left[1].Previous;
+            }
+
+            count--;
         }
 
         public IEnumerator GetEnumerator()
