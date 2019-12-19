@@ -10,13 +10,9 @@ namespace AStarGroceryStore
 {
     public class Node<T>
     {
-
-        private Vector2 position;
-
         T value;
 
         public Node<T> Previous { get; set; }
-        public Vector2 Position { get => position; }
 
         public Node(T value)
         {

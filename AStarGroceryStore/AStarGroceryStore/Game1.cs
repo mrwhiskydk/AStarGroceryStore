@@ -13,7 +13,9 @@ namespace AStarGroceryStore
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D player;
-        Texture2D floor, wall, breadShelf, meatShelf, fruitShelf, register;
+        Texture2D floor, emtyShelfH, emtyShelfV, breadShelf, meatShelf, fruitShelf, register;
+
+        MyList<PathNode> allPathNodes = new MyList<PathNode>();
       
         public Game1()
         {
@@ -46,7 +48,8 @@ namespace AStarGroceryStore
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player = Content.Load<Texture2D>("DerpAgent");
             floor = Content.Load<Texture2D>("floor");
-            wall = Content.Load<Texture2D>("emtyShelf");
+            emtyShelfV = Content.Load<Texture2D>("emtyShelfV");
+            emtyShelfH = Content.Load<Texture2D>("emtyShelfH");
             fruitShelf = Content.Load<Texture2D>("fruitShelf");
             meatShelf = Content.Load<Texture2D>("meatShelf");
             breadShelf = Content.Load<Texture2D>("breadShelf");
@@ -95,19 +98,24 @@ namespace AStarGroceryStore
                 for (int x = 0; x < 11; x++)
                 {
                     spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
-                    
+                    allPathNodes.Add(new PathNode(new Vector2(distance, floordistance), 0, 0));
                     floordistance += 64;
                 }
                 floordistance = 0;
                 distance += 64;
             }
-
-            spriteBatch.Draw(player, new Vector2(400, 400), Color.White);
+            int n = 64;
+            spriteBatch.Draw(player, new Vector2(n * 18, n * 10), Color.White);
             spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
-            spriteBatch.Draw(breadShelf, new Vector2(640, 0), Color.White);
-            spriteBatch.Draw(meatShelf, new Vector2(1216, 0), Color.White);
-            spriteBatch.Draw(register, new Vector2(0, 640), Color.White) ;
-            //spriteBatch.Draw(wall, new Vector2(), Color.White);
+            spriteBatch.Draw(breadShelf, new Vector2(n*10, 0), Color.White);
+            spriteBatch.Draw(meatShelf, new Vector2(n*19, 0), Color.White);
+            spriteBatch.Draw(register, new Vector2(0, n*10), Color.White);
+
+            for (int i = 0; i < 7; i++)
+            {
+                spriteBatch.Draw(emtyShelfH, new Vector2(n * (19 - i), n*2), Color.White);
+            }
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
