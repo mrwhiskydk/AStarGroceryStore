@@ -156,6 +156,7 @@ namespace AStarGroceryStore
                     }
                 }
 
+                
                 currentNode = lowestF;
 
                 Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
