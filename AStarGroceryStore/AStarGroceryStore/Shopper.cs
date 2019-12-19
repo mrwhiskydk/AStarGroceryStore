@@ -22,6 +22,8 @@ namespace AStarGroceryStore
         private MyList<PathNode> closedList = new MyList<PathNode>();
 
 
+
+
         public Shopper()
         {
             myShoppingList = new ShoppingList();        
@@ -92,11 +94,16 @@ namespace AStarGroceryStore
 
         private void Astar()
         {
-            while(currentNode != startingNode)
+            openList.Add(currentNode);
+            closedList.Add(currentNode);
+
+            ///// WHILE START 
+            while(currentNode.Position != startingNode.Position)
             {
                 PathNode lowestF = new PathNode(Vector2.Zero, 0, 0, "");
                 lowestF.Fpoint1 = int.MaxValue;
                 Vector2 distance = Vector2.Zero;
+
                 foreach (PathNode node in Game1.allPathNodes)
                 {
                     if (node.Type != "unwalkable")
@@ -105,7 +112,65 @@ namespace AStarGroceryStore
 
                         if (distance.Length() <= 96 && distance != Vector2.Zero)
                         {
+                            foreach (PathNode node2 in openList)
+                            {
+                                if (node2 != node)
+                                {
+                                    openList.Add(node);
+                                }
+                            }
+                            node.Parent = currentNode;
+                        }
+                    }
+                }
 
+                foreach (PathNode node in openList)
+                {
+                    distance = node.Position - currentNode.Position;
+
+                    if (distance.Length() <= 65)
+                    {
+                        node.Gpoint1 = 10;
+                    }
+                    else
+                    {
+                        node.Gpoint1 = 14;
+                    }
+
+                    node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)startingNode.Position.X, (int)startingNode.Position.Y);
+
+                    node.Fpoint1 = node.Gpoint1 + node.Hpoint1;
+
+                    if (node.Fpoint1 < lowestF.Fpoint1)
+                    {
+                        lowestF = node;
+                    }
+                }
+
+                currentNode = lowestF;
+
+                Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
+
+                closedList.Add(currentNode);
+            }           
+            ///// WHILE END
+
+            /*foreach (PathNode node in Game1.allPathNodes)
+            {
+                openList.Add(node);
+            }
+            while(currentNode.Position != startingNode.Position)
+            {
+                Vector2 distance = Vector2.Zero;
+                foreach (PathNode node in openList)
+                {
+                    if (node.Type != "unwalkable")
+                    {
+                        distance = node.Position - currentNode.Position;
+
+                        if (distance.Length() <= 96 && distance != Vector2.Zero)
+                        {
+                            openList.Remove(node);  
                             if (distance.Length() <= 65)
                             {
                                 node.Gpoint1 = 10;
@@ -123,6 +188,8 @@ namespace AStarGroceryStore
                             {
                                 lowestF = node;
                             }
+
+                          
                         }
                     }
 
@@ -132,7 +199,7 @@ namespace AStarGroceryStore
                 Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
                 currentNode = lowestF;
                 closedList.Add(currentNode);
-            }
+            }*/
 
         }
 
