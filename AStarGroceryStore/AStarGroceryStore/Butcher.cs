@@ -19,10 +19,5 @@ namespace AStarGroceryStore
                 ShopItems.Add(item);
             }
         }
-
-        public override void ShuffleItems()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

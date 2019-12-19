@@ -17,8 +17,6 @@ namespace AStarGroceryStore
         {
            
         }
-
-        public abstract void ShuffleItems();
        
     }
 }
