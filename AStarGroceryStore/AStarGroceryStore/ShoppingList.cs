@@ -9,42 +9,54 @@ namespace AStarGroceryStore
     public class ShoppingList
     {
         private MyList<Department> departments;
+        /// <summary>
+        /// The different departments, AI will shuffle randomly, and then pick the first 2 departments
+        /// </summary>
         public MyList<Department> Departments { get => departments; set => departments = value; }
 
-        public MyList<string> myItems;
+        private MyList<string> myItems;
+        /// <summary>
+        /// The list of Shop Item objectives, that AI will pick randomly, depending on which departments was chosen
+        /// </summary>
+        public MyList<string> MyItems { get => myItems; set => myItems = value; }
 
         public ShoppingList()
         {
-            MyList<Department> tmpDepartments = new MyList<Department>();
+            MyList<Department> tmpDepartments = new MyList<Department>(); // local temporary list, for shuffling departments in 'ShuffleShoppingList' Method
 
+            // all 3 departments are added to temporary list 
             tmpDepartments.Add(new Baker());
             tmpDepartments.Add(new Fruit());
             tmpDepartments.Add(new Butcher());
 
             ShuffleShoppingList(tmpDepartments); // we're shuffling all 3 departments randomly, and then removes the last one, so AI has 2 departments to visit
-            ShuffleShoppintItems(Departments); // we're shuffling all 3 items randomly, for each department to visit
+            ShuffleShoppintItems(Departments); // we're shuffling all 3 items randomly, for both (2) departments, we just shuffled in method call above
         }
 
+        /// <summary>
+        /// Loops through each of the 2 picked departments, and shuffles their shop items randomly, through array, and adds the first shop item in string array to its own MyList of strings
+        /// </summary>
+        /// <param name="departments">The 2 picked departments, that contains the shop items which we wish to shuffle</param>
         private void ShuffleShoppintItems(MyList<Department> departments)
         {
-            myItems = new MyList<string>();
+            MyItems = new MyList<string>(); // new instantitated list, of current AI's shop item objectives
 
-            foreach(Department dep in departments)
+            foreach(Department dep in departments) // Looping through the 2 departments
             {
-                for (int i = dep.shopArray.Length - 1; i > 0; i--)
+                for (int i = dep.shopArray.Length - 1; i > 0; i--) // Looping through current department's string array (the shop items), starting from top through to buttom
                 {
                     Random random = new Random();
-                    int rnd = random.Next(0, i);
+                    int rnd = random.Next(0, i); // random int chosen through remaining shop items to loop through
 
-                    string tmp = dep.shopArray[i];
+                    string tmp = dep.shopArray[i]; // we store current shop item
 
-                    dep.shopArray[i] = dep.shopArray[rnd];
-                    dep.shopArray[rnd] = tmp;
+                    dep.shopArray[i] = dep.shopArray[rnd]; // current shop item is set to index, of random chosen number
+                    dep.shopArray[rnd] = tmp; // we swap previous item on this index, with the new item on random index
                 }
 
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 1; i++) // first shop item of array is added to MyList of current AI's shopping item
                 {
-                    myItems.Add(dep.shopArray[i]);
+                    MyItems.Add(dep.shopArray[i]);
                 }
             }
         }
@@ -52,19 +64,19 @@ namespace AStarGroceryStore
         /// <summary>
         /// Shuffles the 3 departements randomly, from temporary list, through array, to actual list of departments 
         /// </summary>
-        /// <param name="departments"></param>
+        /// <param name="departments">The temporary list of all 3 departments, that we wish to shuffle</param>
         private void ShuffleShoppingList(MyList<Department> departments)
         {
-            Department[] tmpArray = new Department[departments.Count];
+            Department[] tmpArray = new Department[departments.Count]; // local array of departments, with index length equal to MyList of departments (3) - used for random shuffle (code line84 - 93)
 
-            foreach(Department dep in departments)
+            foreach(Department dep in departments) // we loop through all the departments (3), so that we may add them to the department array
             {
                 for (int i = 0; i < tmpArray.Length; i++)
                 {
-                    if(tmpArray[i] == null)
+                    if(tmpArray[i] == null) // if current index of array is null (empty) ...
                     {
-                        tmpArray[i] = dep;
-                        break;
+                        tmpArray[i] = dep; // ... index value is set equal to current department
+                        break; // break our of loop, to continue with next department 
                     }
                 }
             }
@@ -72,7 +84,7 @@ namespace AStarGroceryStore
             for (int i = tmpArray.Length - 1; i > 0; i--)
             {
                 Random random = new Random();
-                int rnd = random.Next(0, i);
+                int rnd = random.Next(0, i); // random int chosen through remaining departments to loop through
 
                 Department tmp = tmpArray[i];
 
