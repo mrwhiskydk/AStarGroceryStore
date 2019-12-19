@@ -18,7 +18,7 @@ namespace AStarGroceryStore
         public Baker baker;
         public Fruit fruit;
         public Butcher butcher;
-
+        private bool drawn = false;
         public static MyList<PathNode> allPathNodes = new MyList<PathNode>();
         
         public Game1()
@@ -28,11 +28,9 @@ namespace AStarGroceryStore
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
 
-            Shopper shopper = new Shopper();
-
             baker = new Baker();
             fruit = new Fruit();
-            butcher = new Butcher();         
+            butcher = new Butcher();
         }
         
         /// <summary>
@@ -101,45 +99,49 @@ namespace AStarGroceryStore
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             // TODO: Add your drawing code here
-            int distance = 0;
-            int floordistance = 0;
-            for (int i = 0; i < 20; i++)
+            if(!drawn)
             {
-                for (int x = 0; x < 11; x++)
+                int distance = 0;
+                int floordistance = 0;
+                for (int i = 0; i < 20; i++)
                 {
-                    spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
-                    PathNode myNode = new PathNode(new Vector2(distance, floordistance), 0, 0, "walkable");
-                    if (myNode.Position == fruit.position)
+                    for (int x = 0; x < 11; x++)
                     {
-                        myNode.Type = "fruit";
+                        spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
+                        PathNode myNode = new PathNode(new Vector2(distance, floordistance), 0, 0, "walkable");
+                        if (myNode.Position == fruit.position)
+                        {
+                            myNode.Type = "fruit";
+                        }
+                        else if (myNode.Position == baker.position)
+                        {
+                            myNode.Type = "baker";
+                        }
+                        else if (myNode.Position == butcher.position)
+                        {
+                            myNode.Type = "butcher";
+                        }
+                        else if (myNode.Position == new Vector2(64, 640))
+                        {
+                            myNode.Type = "register";
+                        }
+                        allPathNodes.Add(myNode);
+                        floordistance += 64;
                     }
-                    else if (myNode.Position == baker.position)
-                    {
-                        myNode.Type = "baker";
-                    }
-                    else if (myNode.Position == butcher.position)
-                    {
-                        myNode.Type = "butcher";
-                    }
-                    else if (myNode.Position == new Vector2(64, 640))
-                    {
-                        myNode.Type = "register"; 
-                    }
-                    allPathNodes.Add(myNode);
-                    floordistance += 64;
+                    floordistance = 0;
+                    distance += 64;
+
                 }
-                floordistance = 0;
-                distance += 64;
+
+                int n = 64;
+                spriteBatch.Draw(player, new Vector2(n * 18, n * 10), Color.White);
+                spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
+                spriteBatch.Draw(breadShelf, new Vector2(n * 10, 0), Color.White);
+                spriteBatch.Draw(meatShelf, new Vector2(n * 19, 0), Color.White);
+                spriteBatch.Draw(register, new Vector2(0, n * 10), Color.White);
+                Shopper shopper = new Shopper();
+                drawn = true;
             }
-            int n = 64;
-            spriteBatch.Draw(player, new Vector2(n * 18, n * 10), Color.White);
-            spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
-
-
-            spriteBatch.Draw(breadShelf, new Vector2(n*10, 0), Color.White);
-            spriteBatch.Draw(meatShelf, new Vector2(n*19, 0), Color.White);
-            spriteBatch.Draw(register, new Vector2(0, n*10), Color.White);
-
 
             //for (int i = 0; i < 7; i++)
             //{

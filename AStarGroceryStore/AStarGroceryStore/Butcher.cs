@@ -22,7 +22,7 @@ namespace AStarGroceryStore
             }
 
             position = new Vector2(1216, 0);
-            Console.WriteLine("hoo");
+            
         }
     }
 }

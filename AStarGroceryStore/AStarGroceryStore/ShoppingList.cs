@@ -92,16 +92,6 @@ namespace AStarGroceryStore
                 tmpArray[rnd] = tmp;
             }
 
-            //for (int i = 0; i < 2; i++)
-            //{
-            //    if(tmpArray[i].ToString() == "Butcher" && i == 1)
-            //    {
-            //        Department tmp = tmpArray[0];
-            //        tmpArray[i] = tmp;
-            //        tmp = tmpArray[1];
-            //    }
-            //}
-
             Departments = new MyList<Department>();
 
             for (int i = 0; i < 2; i++)
@@ -109,36 +99,36 @@ namespace AStarGroceryStore
                 Departments.Add(tmpArray[i]);
             }
 
-            bool containsButcher = false;
-            int counter = 0;
-            int foundAtIndex = 0;
-            foreach (Department item in Departments)
-            {
-                if (item.ToString() == "Butcher")
-                {
-                    containsButcher = true;
-                    foundAtIndex = counter;
-                }
+            //bool containsButcher = false;
+            //int counter = 0;
+            //int foundAtIndex = 0;
+            //foreach (Department item in Departments)
+            //{
+            //    if (item.ToString() == "Butcher")
+            //    {
+            //        containsButcher = true;
+            //        foundAtIndex = counter;
+            //    }
 
-                if (containsButcher && foundAtIndex == 1)
-                {
-                    Department tmp = Departments.GetElementAt(0);
-                    Departments.GetElementAt(0) = Departments.GetElementAt(1);
-                    Departments.GetElementAt(1) = tmp;
+            //    if (containsButcher && foundAtIndex == 1)
+            //    {
+            //        Department tmp = Departments.GetElementAt(0);
+            //        Departments.GetElementAt(0) = Departments.GetElementAt(1);
+            //        Departments.GetElementAt(1) = tmp;
 
-                }
-                counter++;
-            }
+            //    }
+            //    counter++;
+            //}
 
-            if (!containsButcher)
-            {
-                if (Departments.GetElementAt(0).ToString() != "Baker")
-                {
-                    Department tmp = Departments.GetElementAt(0);
-                    Departments.GetElementAt(0) = Departments.GetElementAt(1);
-                    Departments.GetElementAt(1) = tmp;
-                }
-            }
+            //if (!containsButcher)
+            //{
+            //    if (Departments.GetElementAt(0).ToString() != "Baker")
+            //    {
+            //        Department tmp = Departments.GetElementAt(0);
+            //        Departments.GetElementAt(0) = Departments.GetElementAt(1);
+            //        Departments.GetElementAt(1) = tmp;
+            //    }
+            //}
 
             // --
         
