@@ -11,6 +11,7 @@ namespace AStarGroceryStore
         private MyList<Department> departments;
         public MyList<Department> Departments { get => departments; set => departments = value; }
 
+        public MyList<string> myItems;
 
         public ShoppingList()
         {
@@ -26,7 +27,26 @@ namespace AStarGroceryStore
 
         private void ShuffleShoppintItems(MyList<Department> departments)
         {
-            
+            myItems = new MyList<string>();
+
+            foreach(Department dep in departments)
+            {
+                for (int i = dep.shopArray.Length - 1; i > 0; i--)
+                {
+                    Random random = new Random();
+                    int rnd = random.Next(0, i);
+
+                    string tmp = dep.shopArray[i];
+
+                    dep.shopArray[i] = dep.shopArray[rnd];
+                    dep.shopArray[rnd] = tmp;
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    myItems.Add(dep.shopArray[i]);
+                }
+            }
         }
 
         /// <summary>

@@ -20,5 +20,9 @@ namespace AStarGroceryStore
             }
         }
 
+        public override void ShuffleItems()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

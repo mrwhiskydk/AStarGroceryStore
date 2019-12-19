@@ -11,14 +11,14 @@ namespace AStarGroceryStore
         private MyList<ShopItem> shopItems;
         public MyList<ShopItem> ShopItems { get => shopItems; set => shopItems = value; }
 
-        protected string[] shopArray;
-
+        public string[] shopArray;
 
         protected Department()
         {
            
         }
 
+        public abstract void ShuffleItems();
        
     }
 }

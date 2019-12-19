@@ -21,13 +21,6 @@ namespace AStarGroceryStore
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
-
-            ShoppingList shoppingList = new ShoppingList();
-
-            foreach(Department item in shoppingList.Departments)
-            {
-                Console.WriteLine(item.ToString());
-            }
         }
 
         /// <summary>
