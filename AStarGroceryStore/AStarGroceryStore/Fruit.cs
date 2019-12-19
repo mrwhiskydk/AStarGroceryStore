@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace AStarGroceryStore
                 ShopItem item = new ShopItem(shopArray[i]);
                 ShopItems.Add(item);
             }
+
+            position = Vector2.Zero;
         }
     }
 }

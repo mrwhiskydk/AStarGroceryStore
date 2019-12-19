@@ -15,16 +15,26 @@ namespace AStarGroceryStore
         Texture2D player;
         Texture2D floor, emtyShelfH, emtyShelfV, breadShelf, meatShelf, fruitShelf, register;
 
-        MyList<PathNode> allPathNodes = new MyList<PathNode>();
-      
+        public Baker baker;
+        public Fruit fruit;
+        public Butcher butcher;
+
+        public static MyList<PathNode> allPathNodes = new MyList<PathNode>();
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
-        }
 
+            Shopper shopper = new Shopper();
+
+            baker = new Baker();
+            fruit = new Fruit();
+            butcher = new Butcher();         
+        }
+        
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -34,7 +44,7 @@ namespace AStarGroceryStore
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -98,7 +108,24 @@ namespace AStarGroceryStore
                 for (int x = 0; x < 11; x++)
                 {
                     spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
-                    allPathNodes.Add(new PathNode(new Vector2(distance, floordistance), 0, 0));
+                    PathNode myNode = new PathNode(new Vector2(distance, floordistance), 0, 0, "walkable");
+                    if (myNode.Position == fruit.position)
+                    {
+                        myNode.Type = "fruit";
+                    }
+                    else if (myNode.Position == baker.position)
+                    {
+                        myNode.Type = "baker";
+                    }
+                    else if (myNode.Position == butcher.position)
+                    {
+                        myNode.Type = "butcher";
+                    }
+                    else if (myNode.Position == new Vector2(64, 640))
+                    {
+                        myNode.Type = "register"; 
+                    }
+                    allPathNodes.Add(myNode);
                     floordistance += 64;
                 }
                 floordistance = 0;
@@ -107,14 +134,17 @@ namespace AStarGroceryStore
             int n = 64;
             spriteBatch.Draw(player, new Vector2(n * 18, n * 10), Color.White);
             spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
+
+
             spriteBatch.Draw(breadShelf, new Vector2(n*10, 0), Color.White);
             spriteBatch.Draw(meatShelf, new Vector2(n*19, 0), Color.White);
             spriteBatch.Draw(register, new Vector2(0, n*10), Color.White);
 
-            for (int i = 0; i < 7; i++)
-            {
-                spriteBatch.Draw(emtyShelfH, new Vector2(n * (19 - i), n*2), Color.White);
-            }
+
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    spriteBatch.Draw(emtyShelfH, new Vector2(n * (19 - i), n*2), Color.White);
+            //}
 
             spriteBatch.End();
             base.Draw(gameTime);
