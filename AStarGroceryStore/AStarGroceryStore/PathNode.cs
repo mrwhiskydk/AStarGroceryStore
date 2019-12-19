@@ -12,6 +12,8 @@ namespace AStarGroceryStore
         private int Gpoint;
         private int Hpoint;
         private int Fpoint;
+        private PathNode parent;
+
 
         private Vector2 position;
         private string type;
@@ -21,6 +23,7 @@ namespace AStarGroceryStore
         public int Fpoint1 { get => Fpoint; set => Fpoint = value; }
         public Vector2 Position { get => position;}
         public string Type { get => type; set => type = value; }
+        public PathNode Parent { get => parent; set => parent = value; }
 
         public PathNode(Vector2 pos, int G, int H, string type)
         {
@@ -29,6 +32,11 @@ namespace AStarGroceryStore
             Hpoint = H;
             Fpoint = G + H;
             this.type = type;
+        }
+
+        public PathNode()
+        {
+
         }
 
     }

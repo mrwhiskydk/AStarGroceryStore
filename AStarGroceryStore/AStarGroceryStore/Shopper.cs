@@ -38,7 +38,7 @@ namespace AStarGroceryStore
             PathNode goal = new PathNode(Vector2.Zero, 0, 0, "");
             string wantedDepartment = "";
             startingNode = new PathNode(new Vector2(1152, 640), 0, 0, "start");
-            currentNode = startingNode;
+
             Vector2 distance = Vector2.Zero;
             float maxdistance = float.MaxValue;
             MyList<PathNode> departmentNodes = new MyList<PathNode>();
@@ -86,41 +86,54 @@ namespace AStarGroceryStore
             }
 
             Console.WriteLine(goal.Type);
+            currentNode = goal;
             return goal;
         }
 
         private void Astar()
         {
-            Vector2 distance = Vector2.Zero;
-            foreach(PathNode node in Game1.allPathNodes)
+            while(currentNode != startingNode)
             {
-                distance = node.Position - goal.Position;
-
-                if(distance.Length() <= 96 && distance != Vector2.Zero) 
+                PathNode lowestF = new PathNode(Vector2.Zero, 0, 0, "");
+                lowestF.Fpoint1 = int.MaxValue;
+                Vector2 distance = Vector2.Zero;
+                foreach (PathNode node in Game1.allPathNodes)
                 {
-                    if(distance.Length() <= 65)
+                    if (node.Type != "unwalkable")
                     {
-                        node.Gpoint1 = 10;
+                        distance = node.Position - currentNode.Position;
+
+                        if (distance.Length() <= 96 && distance != Vector2.Zero)
+                        {
+
+                            if (distance.Length() <= 65)
+                            {
+                                node.Gpoint1 = 10;
+                            }
+                            else
+                            {
+                                node.Gpoint1 = 14;
+                            }
+
+                            node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)startingNode.Position.X, (int)startingNode.Position.Y);
+
+                            node.Fpoint1 = node.Gpoint1 + node.Hpoint1;
+
+                            if (node.Fpoint1 < lowestF.Fpoint1)
+                            {
+                                lowestF = node;
+                            }
+                        }
                     }
-                    else 
-                    {
-                        node.Gpoint1 = 14;
-                    }
 
-                    node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)currentNode.Position.X, (int)currentNode.Position.Y);
-
-                    node.Fpoint1 = node.Gpoint1 + node.Hpoint1;
-
-                    openList.Add(node);
                 }
+
+                lowestF.Parent = currentNode;
+                Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
+                currentNode = lowestF;
+                closedList.Add(currentNode);
             }
 
-            foreach(PathNode node in openList)
-            {
-                Console.WriteLine(node.Fpoint1.ToString());
-
-                
-            }
         }
 
         private int ComputeHScore(int x, int y, int targetX, int targetY)
