@@ -14,11 +14,11 @@ namespace AStarGroceryStore
         /// </summary>
         public MyList<Department> Departments { get => departments; set => departments = value; }
 
-        private MyList<string> myItems;
+        private MyStack<string> myItems;
         /// <summary>
         /// The list of Shop Item objectives, that AI will pick randomly, depending on which departments was chosen
         /// </summary>
-        public MyList<string> MyItems { get => myItems; set => myItems = value; }
+        public MyStack<string> MyItems { get => myItems; set => myItems = value; }
 
         public ShoppingList()
         {
@@ -39,7 +39,7 @@ namespace AStarGroceryStore
         /// <param name="departments">The 2 picked departments, that contains the shop items which we wish to shuffle</param>
         private void ShuffleShoppintItems(MyList<Department> departments)
         {
-            MyItems = new MyList<string>(); // new instantitated list, of current AI's shop item objectives
+            MyItems = new MyStack<string>(); // new instantitated Stack, of current AI's shop item objectives
 
             foreach(Department dep in departments) // Looping through the 2 departments
             {
@@ -56,7 +56,7 @@ namespace AStarGroceryStore
 
                 for (int i = 0; i < 1; i++) // first shop item of array is added to MyList of current AI's shopping item
                 {
-                    MyItems.Add(dep.shopArray[i]);
+                    MyItems.Push(dep.shopArray[i]);
                 }
             }
         }
@@ -92,12 +92,58 @@ namespace AStarGroceryStore
                 tmpArray[rnd] = tmp;
             }
 
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    if(tmpArray[i].ToString() == "Butcher" && i == 1)
+            //    {
+            //        Department tmp = tmpArray[0];
+            //        tmpArray[i] = tmp;
+            //        tmp = tmpArray[1];
+            //    }
+            //}
+
             Departments = new MyList<Department>();
 
             for (int i = 0; i < 2; i++)
             {
                 Departments.Add(tmpArray[i]);
             }
+
+            bool containsButcher = false;
+            int counter = 0;
+            int foundAtIndex = 0;
+            foreach (Department item in Departments)
+            {
+                if (item.ToString() == "Butcher")
+                {
+                    containsButcher = true;
+                    foundAtIndex = counter;
+                }
+
+                if (containsButcher && foundAtIndex == 1)
+                {
+                    Department tmp = Departments.GetElementAt(0);
+                    Departments.GetElementAt(0) = Departments.GetElementAt(1);
+                    Departments.GetElementAt(1) = tmp;
+
+                }
+                counter++;
+            }
+
+            if (!containsButcher)
+            {
+                if (Departments.GetElementAt(0).ToString() != "Baker")
+                {
+                    Department tmp = Departments.GetElementAt(0);
+                    Departments.GetElementAt(0) = Departments.GetElementAt(1);
+                    Departments.GetElementAt(1) = tmp;
+                }
+            }
+
+            // --
+        
+
+            
         }
     }
 }

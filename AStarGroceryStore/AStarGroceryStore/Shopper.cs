@@ -16,13 +16,12 @@ namespace AStarGroceryStore
         public Shopper()
         {
             myShoppingList = new ShoppingList();
-
             
             foreach(string item in myShoppingList.MyItems)
             {
                 Console.WriteLine(item);
             }
-
+            
             goal = FindGoal();
         }
 
@@ -30,6 +29,10 @@ namespace AStarGroceryStore
         {
             PathNode goal = new PathNode(Vector2.Zero, 0, 0, "");
             string wantedDepartment = "";
+            PathNode startingNode = new PathNode(new Vector2(1152, 640), 0, 0, "start");
+            Vector2 distance = Vector2.Zero;
+            float maxdistance = float.MaxValue;
+            MyList<PathNode> departmentNodes = new MyList<PathNode>();
             
             foreach (string item in myShoppingList.MyItems)
             {
@@ -50,11 +53,27 @@ namespace AStarGroceryStore
                 {
                     if (node.Type == wantedDepartment)
                     {
-                        goal = node;
+                        departmentNodes.Add(node);
                     }
                 }
+            }
 
-                break;
+            foreach(PathNode node in departmentNodes)
+            {
+                distance = node.Position - startingNode.Position;
+                if(distance.Length() < maxdistance)
+                {
+                    maxdistance = distance.Length();
+                }
+            }
+
+            foreach (PathNode node in departmentNodes)
+            {
+                distance = node.Position - startingNode.Position;
+                if (distance.Length() == maxdistance)
+                {
+                    goal = node;
+                }
             }
 
             return goal;

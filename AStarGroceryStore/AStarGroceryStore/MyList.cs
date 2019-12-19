@@ -85,6 +85,25 @@ namespace AStarGroceryStore
             count--;
         }
 
+        public ref T GetElementAt(int index)
+        {
+            if (index > count || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            MyListElement<T> current = first;        
+
+            int counter = 0;
+            while (counter != index)
+            {
+                current = current.Next;
+                counter++;
+            }
+            
+            return ref current.val;
+        }
+
         public IEnumerator GetEnumerator()
         {
             MyListElement<T> current = first;

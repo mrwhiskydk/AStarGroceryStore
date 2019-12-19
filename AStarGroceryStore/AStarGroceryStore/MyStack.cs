@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AStarGroceryStore
 {
-    class MyStack<T> : IEnumerable<T>
+    public class MyStack<T> : IEnumerable<T>
     {
         Node<T> last;
 

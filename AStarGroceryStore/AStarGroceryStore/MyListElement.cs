@@ -8,7 +8,7 @@ namespace AStarGroceryStore
 {
     public class MyListElement<T>
     {
-        private T val;
+        public T val;
         public T Value { get => val; set => val = value; }
 
         private MyListElement<T> next;
