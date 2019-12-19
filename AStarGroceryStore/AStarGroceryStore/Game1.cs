@@ -28,6 +28,17 @@ namespace AStarGroceryStore
         {
             // TODO: Add your initialization logic here
 
+            MyStack<int> myStack = new MyStack<int>();
+            myStack.Push(1);
+            myStack.Push(2);
+            myStack.Push(3);
+            myStack.Push(4);
+
+            foreach (var item in myStack)
+            {
+                System.Console.WriteLine(item);
+            }
+
             base.Initialize();
         }
 
