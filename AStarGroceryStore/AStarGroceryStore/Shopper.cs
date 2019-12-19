@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AStarGroceryStore
 {
-    public class Shopper
+    public class Shopper// : GameObject
     {
         private static string[] closestDepartments = { "Butcher", "Baker", "Fruit" };
         private ShoppingList myShoppingList;
@@ -21,19 +22,22 @@ namespace AStarGroceryStore
         private MyList<PathNode> openList = new MyList<PathNode>();
         private MyList<PathNode> closedList = new MyList<PathNode>();
 
+        public Vector2 position = new Vector2(1152, 640);
 
 
-
-        public Shopper()
+        public Shopper(/*string spriteName*/)// : base(spriteName)
         {
             myShoppingList = new ShoppingList();        
             
             goal = FindGoal();
 
             myPath.Push(goal);
-
-            Astar();
+            Thread t = new Thread(Astar);
+            t.IsBackground = true;
+            t.Start();
         }
+
+        
 
         private PathNode FindGoal()
         {
@@ -112,14 +116,19 @@ namespace AStarGroceryStore
 
                         if (distance.Length() <= 96 && distance != Vector2.Zero)
                         {
-                            foreach (PathNode node2 in openList)
+                            if (!closedList.Contains(node))
                             {
-                                if (node2 != node)
+                                node.Parent = currentNode;
+                            }
+
+                            if(openList.Count > 0)
+                            {
+                                if (!openList.Contains(node))
                                 {
                                     openList.Add(node);
                                 }
                             }
-                            node.Parent = currentNode;
+                           
                         }
                     }
                 }
@@ -150,62 +159,28 @@ namespace AStarGroceryStore
                 currentNode = lowestF;
 
                 Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
-
+                //openList.Remove(currentNode);
                 closedList.Add(currentNode);
-            }           
+            }
             ///// WHILE END
 
-            /*foreach (PathNode node in Game1.allPathNodes)
-            {
-                openList.Add(node);
-            }
-            while(currentNode.Position != startingNode.Position)
-            {
-                Vector2 distance = Vector2.Zero;
-                foreach (PathNode node in openList)
-                {
-                    if (node.Type != "unwalkable")
-                    {
-                        distance = node.Position - currentNode.Position;
-
-                        if (distance.Length() <= 96 && distance != Vector2.Zero)
-                        {
-                            openList.Remove(node);  
-                            if (distance.Length() <= 65)
-                            {
-                                node.Gpoint1 = 10;
-                            }
-                            else
-                            {
-                                node.Gpoint1 = 14;
-                            }
-
-                            node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)startingNode.Position.X, (int)startingNode.Position.Y);
-
-                            node.Fpoint1 = node.Gpoint1 + node.Hpoint1;
-
-                            if (node.Fpoint1 < lowestF.Fpoint1)
-                            {
-                                lowestF = node;
-                            }
-
-                          
-                        }
-                    }
-
-                }
-
-                lowestF.Parent = currentNode;
-                Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
-                currentNode = lowestF;
-                closedList.Add(currentNode);
-            }*/
-
+            Walk();
         }
 
         private int ComputeHScore(int x, int y, int targetX, int targetY)
         {
             return (Math.Abs(targetX - x) + Math.Abs(targetY - y)) / 64 * 10;
+        }
+
+        private void Walk()
+        {
+            while(position != goal.Position)
+            {
+                position = currentNode.Parent.Position;
+
+                currentNode = currentNode.Parent;
+                Thread.Sleep(500);
+            }
         }
     }
 }

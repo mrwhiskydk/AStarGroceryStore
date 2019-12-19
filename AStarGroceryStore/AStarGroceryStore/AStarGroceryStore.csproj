@@ -48,6 +48,7 @@
     <Compile Include="Department.cs" />
     <Compile Include="Fruit.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="MyStack.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="MyList.cs" />

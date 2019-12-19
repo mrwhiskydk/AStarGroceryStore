@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -15,16 +16,34 @@ namespace AStarGroceryStore
         Texture2D player;
         Texture2D floor, emtyShelfH, emtyShelfV, breadShelf, meatShelf, fruitShelf, register;
 
+        MyList<Shopper> shoppers = new MyList<Shopper>();
+
+        //public static MyList<GameObject> gameObjects = new MyList<GameObject>();
         public Baker baker;
         public Fruit fruit;
         public Butcher butcher;
         private bool drawn = false;
         public static MyList<PathNode> allPathNodes = new MyList<PathNode>();
+
+        /*private static ContentManager _content;
+        public static ContentManager ContentManager
+        {
+            get
+            {
+                return _content;
+            }
+        }*/
+
+        //public static void AddGameObject(GameObject obj)
+        //{
+        //    gameObjects.Add(obj);
+        //}
         
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            //_content = Content;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
 
@@ -86,8 +105,17 @@ namespace AStarGroceryStore
                 Exit();
 
             // TODO: Add your update logic here
+            /*if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                Shopper shopPerson = new Shopper("DerpAgent");
+            }*/
+            /*foreach (GameObject go in gameObjects)
+            {
+                go.Update(gameTime);
+            }*/
 
             base.Update(gameTime);
+            
         }
 
         /// <summary>
@@ -99,15 +127,17 @@ namespace AStarGroceryStore
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             // TODO: Add your drawing code here
-            if(!drawn)
+           
+            int distance = 0;
+            int floordistance = 0;
+            for (int i = 0; i < 20; i++)
             {
-                int distance = 0;
-                int floordistance = 0;
-                for (int i = 0; i < 20; i++)
+                for (int x = 0; x < 11; x++)
                 {
-                    for (int x = 0; x < 11; x++)
+                    spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
+
+                    if (!drawn)
                     {
-                        spriteBatch.Draw(floor, new Vector2(distance, floordistance), Color.White);
                         PathNode myNode = new PathNode(new Vector2(distance, floordistance), 0, 0, "walkable");
                         if (myNode.Position == fruit.position)
                         {
@@ -126,22 +156,36 @@ namespace AStarGroceryStore
                             myNode.Type = "register";
                         }
                         allPathNodes.Add(myNode);
-                        floordistance += 64;
                     }
-                    floordistance = 0;
-                    distance += 64;
-
+                    floordistance += 64;
                 }
+                floordistance = 0;
+                distance += 64;
 
-                int n = 64;
-                spriteBatch.Draw(player, new Vector2(n * 18, n * 10), Color.White);
-                spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
-                spriteBatch.Draw(breadShelf, new Vector2(n * 10, 0), Color.White);
-                spriteBatch.Draw(meatShelf, new Vector2(n * 19, 0), Color.White);
-                spriteBatch.Draw(register, new Vector2(0, n * 10), Color.White);
-                Shopper shopper = new Shopper();
-                drawn = true;
             }
+
+            if (!drawn)
+            {
+                
+                shoppers.Add(new Shopper());
+            }
+            drawn = true;
+
+            foreach(Shopper shopper in shoppers)
+            {
+                spriteBatch.Draw(player, shopper.position, Color.White);
+            }
+
+            int n = 64;
+            spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
+            spriteBatch.Draw(breadShelf, new Vector2(n * 10, 0), Color.White);
+            spriteBatch.Draw(meatShelf, new Vector2(n * 19, 0), Color.White);
+            spriteBatch.Draw(register, new Vector2(0, n * 10), Color.White);
+            //foreach (GameObject go in gameObjects)
+            //{
+            //    go.Draw(spriteBatch);
+            //}
+
 
             //for (int i = 0; i < 7; i++)
             //{

@@ -85,6 +85,27 @@ namespace AStarGroceryStore
             count--;
         }
 
+        public bool Contains(T value)
+        {
+            if (EqualityComparer<T>.Default.Equals(value, default(T)))
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            MyListElement<T> current = first;
+
+            while (!EqualityComparer<T>.Default.Equals(value, current.GetValue()) && current.Next != null) // we loop through elements while current element isn't the one we wish to remove
+            {
+                if(EqualityComparer<T>.Default.Equals(value, current.GetValue()))
+                {
+                    return true;
+                }
+                current = current.Next; // current element is set to element next in line
+            }
+
+            return false;
+        }
+
         public ref T GetElementAt(int index)
         {
             if (index > count || index < 0)
