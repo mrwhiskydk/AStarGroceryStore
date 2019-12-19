@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace AStarGroceryStore
 {
@@ -18,10 +19,17 @@ namespace AStarGroceryStore
         /// </summary>
         public string[] shopArray;
 
+        public Vector2 position;
+
         protected Department()
         {
            
         }
-       
+
+        public override string ToString()
+        {
+            return this.GetType().Name;
+        }
+
     }
 }

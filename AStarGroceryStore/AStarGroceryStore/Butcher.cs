@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace AStarGroceryStore
 {
     public class Butcher : Department
     {
+        int b = 3 + 2;
         public Butcher()
         {
             ShopItems = new MyList<ShopItem>();
@@ -18,6 +20,9 @@ namespace AStarGroceryStore
                 ShopItem item = new ShopItem(shopArray[i]);
                 ShopItems.Add(item);
             }
+
+            position = new Vector2(1216, 0);
+            Console.WriteLine("hoo");
         }
     }
 }
