@@ -24,58 +24,70 @@ namespace AStarGroceryStore
 
         public Vector2 position = new Vector2(1152, 640);
 
+        Thread starThread;
+
 
         public Shopper(/*string spriteName*/)// : base(spriteName)
         {
             myShoppingList = new ShoppingList();        
-            
-            goal = FindGoal();
+           
 
-            myPath.Push(goal);
-            Thread t = new Thread(Astar);
-            t.IsBackground = true;
-            t.Start();
+            starThread = new Thread(AllTheMethods);
+            starThread.IsBackground = true;
+            starThread.Start();
         }
 
+        private void AllTheMethods()
+        {
+            goal = FindGoal();
+
+            Astar();
+
+            Walk();
+
+            goal = FindGoal();
+
+            Astar();
+
+            Walk();
+        }
         
 
         private PathNode FindGoal()
-        {
+        {           
             PathNode goal = new PathNode(Vector2.Zero, 0, 0, "");
             string wantedDepartment = "";
-            startingNode = new PathNode(new Vector2(1152, 640), 0, 0, "start");
-
+            
             Vector2 distance = Vector2.Zero;
             float maxdistance = float.MaxValue;
             MyList<PathNode> departmentNodes = new MyList<PathNode>();
-            
-            foreach (string item in myShoppingList.MyItems)
-            {
-                if (item == "Beef" || item == "Chicken" || item == "Fish")
-                {
-                    wantedDepartment = "butcher";
-                }
-                else if (item == "Cookie" || item == "Bread" || item == "Cake")
-                {
-                    wantedDepartment = "baker";
-                }
-                else
-                {
-                    wantedDepartment = "fruit";
-                }
+            string item = myShoppingList.MyItems.Pop();
 
-                foreach (PathNode node in Game1.allPathNodes)
+            if (item == "Beef" || item == "Chicken" || item == "Fish")
+            {
+                wantedDepartment = "butcher";
+            }
+            else if (item == "Cookie" || item == "Bread" || item == "Cake")
+            {
+                wantedDepartment = "baker";
+            }
+            else
+            {
+                wantedDepartment = "fruit";
+            }
+
+            foreach (PathNode node in Game1.allPathNodes)
+            {
+                if (node.Type == wantedDepartment)
                 {
-                    if (node.Type == wantedDepartment)
-                    {
-                        departmentNodes.Add(node);
-                    }
+                    departmentNodes.Add(node);
                 }
             }
 
-            foreach(PathNode node in departmentNodes)
+
+            foreach (PathNode node in departmentNodes)
             {
-                distance = node.Position - startingNode.Position;
+                distance = node.Position - position;
                 if(distance.Length() < maxdistance)
                 {
                     maxdistance = distance.Length();
@@ -84,7 +96,7 @@ namespace AStarGroceryStore
 
             foreach (PathNode node in departmentNodes)
             {
-                distance = node.Position - startingNode.Position;
+                distance = node.Position - position;
                 if (distance.Length() == maxdistance)
                 {
                     goal = node;
@@ -98,11 +110,13 @@ namespace AStarGroceryStore
 
         private void Astar()
         {
+            openList = new MyList<PathNode>();
+            closedList = new MyList<PathNode>();
             openList.Add(currentNode);
             closedList.Add(currentNode);
 
             ///// WHILE START 
-            while(currentNode.Position != startingNode.Position)
+            while(currentNode.Position != position)
             {
                 PathNode lowestF = new PathNode(Vector2.Zero, 0, 0, "");
                 lowestF.Fpoint1 = int.MaxValue;
@@ -116,11 +130,6 @@ namespace AStarGroceryStore
 
                         if (distance.Length() <= 96 && distance != Vector2.Zero)
                         {
-                            if (!closedList.Contains(node))
-                            {
-                                node.Parent = currentNode;
-                            }
-
                             if(openList.Count > 0)
                             {
                                 if (!openList.Contains(node))
@@ -146,7 +155,7 @@ namespace AStarGroceryStore
                         node.Gpoint1 = 14;
                     }
 
-                    node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)startingNode.Position.X, (int)startingNode.Position.Y);
+                    node.Hpoint1 = ComputeHScore((int)node.Position.X, (int)node.Position.Y, (int)position.X, (int)position.Y);
 
                     node.Fpoint1 = node.Gpoint1 + node.Hpoint1;
 
@@ -156,7 +165,7 @@ namespace AStarGroceryStore
                     }
                 }
 
-                
+                lowestF.Parent = currentNode;
                 currentNode = lowestF;
 
                 Console.WriteLine(lowestF.Position.X.ToString() + "," + lowestF.Position.Y.ToString());
@@ -164,8 +173,6 @@ namespace AStarGroceryStore
                 closedList.Add(currentNode);
             }
             ///// WHILE END
-
-            Walk();
         }
 
         private int ComputeHScore(int x, int y, int targetX, int targetY)
@@ -182,6 +189,17 @@ namespace AStarGroceryStore
                 currentNode = currentNode.Parent;
                 Thread.Sleep(500);
             }
+
+            //starThread.Abort();
+
+            //if (myShoppingList.MyItems.Count > 0)
+            //{
+            //    FindGoal();
+            //    starThread = new Thread(Astar);
+            //    starThread.IsBackground = true;
+            //    starThread.Start();
+            //}
+
         }
     }
 }
