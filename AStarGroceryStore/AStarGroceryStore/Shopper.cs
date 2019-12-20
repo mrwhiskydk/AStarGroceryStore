@@ -202,6 +202,7 @@ namespace AStarGroceryStore
             if (position == new Vector2(64, 640))
             {
                 Game1.shoppers.Remove(this);
+                Game1.shoppers.Add(new Shopper());
             }
 
         }
