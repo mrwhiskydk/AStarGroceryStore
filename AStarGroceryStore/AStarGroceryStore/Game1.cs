@@ -16,7 +16,7 @@ namespace AStarGroceryStore
         Texture2D player;
         Texture2D floor, emtyShelfH, emtyShelfV, breadShelf, meatShelf, fruitShelf, register;
 
-        MyList<Shopper> shoppers = new MyList<Shopper>();
+        public static MyList<Shopper> shoppers = new MyList<Shopper>();
 
         //public static MyList<GameObject> gameObjects = new MyList<GameObject>();
         public Baker baker;

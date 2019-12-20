@@ -54,13 +54,19 @@ namespace AStarGroceryStore
             {
                 MyListElement<T> tmp = first.Next;
                 first = tmp;
-                first.Previous = null;
+                if(first != null)
+                {
+                    first.Previous = null;
+                }
             }
             else if(EqualityComparer<T>.Default.Equals(value, last.Value)) // if the value we wish to remove is the last element in list
             {
                 MyListElement<T> tmp = last.Previous;
                 last = tmp;
-                last.Next = null;
+                if(last != null)
+                {
+                    last.Next = null;
+                }             
             }
             else // if the value we wish to remove is an element that is somewhere, in-between first and last element
             {
