@@ -25,6 +25,8 @@ namespace AStarGroceryStore
         private bool drawn = false;
         public static MyList<PathNode> allPathNodes = new MyList<PathNode>();
 
+
+
         /*private static ContentManager _content;
         public static ContentManager ContentManager
         {
@@ -105,14 +107,6 @@ namespace AStarGroceryStore
                 Exit();
 
             // TODO: Add your update logic here
-            /*if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                Shopper shopPerson = new Shopper("DerpAgent");
-            }*/
-            /*foreach (GameObject go in gameObjects)
-            {
-                go.Update(gameTime);
-            }*/
 
             base.Update(gameTime);
             
@@ -130,6 +124,7 @@ namespace AStarGroceryStore
            
             int distance = 0;
             int floordistance = 0;
+            int n = 64;
             for (int i = 0; i < 20; i++)
             {
                 for (int x = 0; x < 11; x++)
@@ -139,6 +134,12 @@ namespace AStarGroceryStore
                     if (!drawn)
                     {
                         PathNode myNode = new PathNode(new Vector2(distance, floordistance), 0, 0, "walkable");
+
+                        if ((i == 2 && x == 2) || (i == 2 && x == 3) | (i == 2 && x == 4) || (i == 5 && x == 5) || (i == 7 && x == 6) || (i == 7 && x == 5) || (i == 7 && x == 4) || (i == 3 && x == 1))
+                        {
+                            myNode.Type = "unwalkable";
+                        }
+
                         if (myNode.Position == fruit.position)
                         {
                             myNode.Type = "fruit";
@@ -157,7 +158,13 @@ namespace AStarGroceryStore
                         }
                         allPathNodes.Add(myNode);
                     }
+                    if ((i == 2 && x == 2) || (i == 2 && x == 3) | (i == 2 && x == 4) || (i == 5 && x == 5) || (i == 7 && x == 6) || (i == 7 && x == 5) || (i == 7 && x == 4) || (i == 3 && x == 1))
+                    {
+                        spriteBatch.Draw(emtyShelfH, new Vector2(distance, floordistance), Color.White);
+                    }
                     floordistance += 64;
+
+                    
                 }
                 floordistance = 0;
                 distance += 64;
@@ -176,20 +183,16 @@ namespace AStarGroceryStore
                 spriteBatch.Draw(player, shopper.position, Color.White);
             }
 
-            int n = 64;
+            
             spriteBatch.Draw(fruitShelf, Vector2.Zero, Color.White);
             spriteBatch.Draw(breadShelf, new Vector2(n * 10, 0), Color.White);
             spriteBatch.Draw(meatShelf, new Vector2(n * 19, 0), Color.White);
             spriteBatch.Draw(register, new Vector2(0, n * 10), Color.White);
-            //foreach (GameObject go in gameObjects)
-            //{
-            //    go.Draw(spriteBatch);
-            //}
 
 
             //for (int i = 0; i < 7; i++)
             //{
-            //    spriteBatch.Draw(emtyShelfH, new Vector2(n * (19 - i), n*2), Color.White);
+            //    spriteBatch.Draw(emtyShelfH, new Vector2(n * (19 - i), n * 2), Color.White);
             //}
 
             spriteBatch.End();
